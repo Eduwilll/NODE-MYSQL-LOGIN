@@ -37,3 +37,30 @@ nav li a:hover{
     width: 65%;
     border-bottom: 1px solid rgba(0,0,0,0.125);
 }
+
+.card {
+    background-color: #865ec2;
+    color: #fff;
+
+    
+}
+
+.card-header {
+    background-color: #563d7c;
+    text-align: center;
+
+}
+
+.card-body {
+    
+}
+
+.form-group {
+    margin: 10px 150px 10px 150px;
+}
+
+
+#button{
+    margin:10px 150px 10px 150px;
+}
+

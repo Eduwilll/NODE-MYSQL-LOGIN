@@ -12,9 +12,14 @@
     <nav>
         <h4>Node-MySql Login</h4>
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
+            <li><a href="/">Inicio</a></li>
+            {{#if user}}
+                <li><a href="/profile">Perfil</a></li>
+                <li><a href="/auth/logout">Sair</a></li>
+            {{else}}
+                <li><a href="/login">Entrar</a></li>
+                <li><a href="/register">Registar-se</a></li>
+            {{/if}}
         </ul>
     </nav>
     
@@ -27,7 +32,7 @@
             <p>(10,0 pontos) Faça a seguinte aplicação em Node, com a utilização de um Banco de Dados.</p>
             <img src="/img/imagem.png" class="img-fluid" alt="oi"></img>
             <p class="lead">
-                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+                <a class="btn btn-primary btn-lg" href="/login" role="button">Entrar</a>
             </p>
         </div>
     </div>

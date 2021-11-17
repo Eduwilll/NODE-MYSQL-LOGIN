@@ -1,6 +1,7 @@
 const mysql = require("mysql");//importando mysql
 const jwt = require("jsonwebtoken");//importando jwt
 const bcrypt = require("bcryptjs");//importando bcrypt
+const {promisify} = require ('util');//importando promisify
 
 //colocando os valores da coneceção mysql
 const db = mysql.createConnection({
@@ -17,6 +18,8 @@ exports.register = (req,res) => {
     const {name, email, password, passwordConfirm} = req.body;
 
     db.query("SELECT email FROM users WHERE email = ?", [email], async (error, result) => {
+
+        //Checando erros e redudancia
         if(error) {
             console.log(error);
         }
@@ -29,6 +32,7 @@ exports.register = (req,res) => {
                 message: 'A senha não compativeis'
             });
         }
+
         //criptogrando a senha 
         let hashedPassword = await bcrypt.hash(password, 8);
         console.log(hashedPassword);
@@ -92,3 +96,44 @@ exports.login = async (req, res) => {
     }
 
 }
+
+
+exports.isLoggedIn = async(req, res, next) => {
+    console.log(req.cookies);
+    if(req.cookies.jwt) {
+        try {
+            //1)verificar o token
+            const decoded = await promisify(jwt.verify)(req.cookies.jwt,
+                    process.env.JWT_SECRET
+            );
+            
+            console.log(decoded);
+         //2)check se o usuário existe 
+            db.query('SELECT * FROM users WHERE id = ?',[decoded.id],(error,result) => {
+                console.log(result);
+
+                if(!result) {
+                    return next();
+                } 
+
+                req.user = result[0];
+                return next();
+            });
+        } catch (error) {
+            console.log(error);
+            return next();
+        }
+    } else {
+        next();
+    }
+}
+
+exports.logout = async(req, res) => {
+    //sobrescrevendo o cookie
+    res.cookie('jwt', 'logout',{
+        expires: new Date(Date.now() + 2*1000), //cookie expiration time
+        httpOnly: true
+    })
+    res.status(200).redirect('/');//redirecionando o user para home
+}
+

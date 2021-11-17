@@ -1,10 +1,13 @@
 const express = require('express');
+const authController = require('../controllers/auth');
 
 const router = express.Router();
 
 //rendernizando a pagina Home
-router.get('/',(req, res) => {
-    res.render('index');
+router.get('/',authController.isLoggedIn,(req, res) => {
+    res.render('index',{
+        user: req.user
+    });
 })
 
 //rendernizando a pagina Register
@@ -17,8 +20,17 @@ router.get('/login',(req, res) => {
     res.render('login');
 })
 
-router.get('/profile',(req, res) => {
-    res.render('profile');
+//rendernizando a pagina de Profile
+router.get('/profile',authController.isLoggedIn, (req, res) => {
+
+    if (req.user) {
+        res.render('profile', {
+            user: req.user
+        });
+    } else {
+        res.redirect('/login')
+    }
+
 })
 
 module.exports = router;

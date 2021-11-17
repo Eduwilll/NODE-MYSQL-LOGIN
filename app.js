@@ -47,3 +47,8 @@ app.use('/auth', require('./routes/auth.js'))
 app.listen(5001, ()=> {
     console.log("Server started on Port 5000");
 })
+
+/*CURSO: Tecnologia em Análise e Desenvolvimento de Sistemas
+DISCIPLINA: Programação para Web
+Profa. Me. Janaine C. S. Arantes
+Prova 02*/
