@@ -12,3 +12,7 @@ Prova 02
 
 ##tela de login
 ![login](https://i.ibb.co/p252XFz/image.png)
+
+##Tela de Cadastro
+![register](https://i.ibb.co/9tF52hj/image.png)
+
