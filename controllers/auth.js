@@ -38,7 +38,7 @@ exports.register = (req,res) => {
         console.log(hashedPassword);
 
         //inserindo os dados no banco de dados
-        db.query('INSERT INTO users SET ?', {name: name, email:email, password:hashedPassword}, (err, result) => {
+        db.query('INSERT INTO users SET ?', {name: name, email:email, password:hashedPassword}, (error, result) => {
             if(error){
                 console.log(error)
             } else {
@@ -57,6 +57,7 @@ exports.login = async (req, res) => {
     //codicoes da para logar o user
     try {
         const {email, password} = req.body;
+
         if(!email || !password) {
             return res.status(400).render('login', {
                 message: 'Digite o email e a senha'
@@ -80,7 +81,7 @@ exports.login = async (req, res) => {
 
                 const cookieOptions = {
                     expires: new Date(
-                        Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
+                        Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000 //
                     ),
                     httpOnly: true
                 }
@@ -127,7 +128,7 @@ exports.isLoggedIn = async(req, res, next) => {
         next();
     }
 }
-
+//
 exports.logout = async(req, res) => {
     //sobrescrevendo o cookie
     res.cookie('jwt', 'logout',{
