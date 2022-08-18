@@ -45,7 +45,7 @@ app.use('/auth', require('./routes/auth.js'))
 
 //servidor executendo, funcao callback.
 app.listen(5001, ()=> {
-    console.log("Server started on Port 5000");
+    console.log("Server started on Port 5001");
 })
 
 /*CURSO: Tecnologia em Análise e Desenvolvimento de Sistemas
