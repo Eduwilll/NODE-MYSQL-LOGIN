@@ -2,7 +2,7 @@
 ## DISCIPLINA: Programação para Web
 ### Profa. Me. Janaine C. S. Arantes
 Prova 02
-(10,0 pontos) Faça a seguinte aplicação em Node, com a utilização de um Banco de Dados.
+Fazer a seguinte aplicação em Node, com a utilização de Banco de Dados o MySql.
 
 ## DB MySQL
 ![table](https://i.ibb.co/qNfNK1Y/Captura-de-tela-2021-11-17-183139.png) 
@@ -10,9 +10,9 @@ Prova 02
 ## Tela de Inicio
 ![Index](https://i.ibb.co/Lr2jsQY/image.png)
 
-##tela de login
+## tela de login
 ![login](https://i.ibb.co/p252XFz/image.png)
 
-##Tela de Cadastro
+## Tela de Cadastro
 ![register](https://i.ibb.co/9tF52hj/image.png)
 
