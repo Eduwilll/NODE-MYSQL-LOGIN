@@ -1,14 +1,24 @@
-const express = require("express"); //importando do modulo express para startar.
-const path = require("path"); //importando path
-const mysql = require("mysql");//importando mysql
-const dotenv = require("dotenv");
-const cookieParser = require("cookie-parser");
+const express = require('express');
+const mysql = require('mysql');
+const dotenv = require('dotenv');
+const path = require('path');
+const cookieParser = require('cookie-parser');
 
-dotenv.config({path:'./.env'})
-//startando com a cost app.
+// Carrega as variáveis de ambiente do arquivo .env
+dotenv.config({ path: './.env'});
+
 const app = express();
 
-//colocando os valores da coneceção mysql
+// Configuração do Handlebars
+
+app.set('view engine', 'hbs');
+
+// Configuração dos middlewares
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(cookieParser());
+app.use(express.static('public')); // Para servir arquivos estáticos
+
 const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USER,
@@ -16,39 +26,24 @@ const db = mysql.createConnection({
     database: process.env.DATABASE
 });
 
-//Definindo o public directory para usar CSS e/ou JavaScript
-const publicDirectory = path.join(__dirname, './public');
-app.use(express.static(publicDirectory));// rodando no express
-
-//parse url-encoded bodies (enviados pelo html form)
-app.use(express.urlencoded({extended: false}));
-//
-app.use(express.json());
-//inicializando o  cookieParser
-app.use(cookieParser());
-
-//Setando o templeta que vai ser usado
-app.set('view engine', 'hbs');
-
-//checando a conexao com MYSQL
 db.connect((error) => {
     if(error) {
-        console.log(error)
+        console.log(error);
     } else {
-        console.log("MYSQL Connected...");
+        console.log("MySQL Connected...");
     }
-})
+});
 
-//Define Routes
-app.use('/',require('./routes/pages.js'));
-app.use('/auth', require('./routes/auth.js'))
+// Middleware
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(cookieParser());
 
-//servidor executendo, funcao callback.
-app.listen(5001, ()=> {
-    console.log("Server started on Port 5001");
-})
+// Define Routes
+app.use('/', require('./routes/pages'));
+app.use('/auth', require('./routes/auth'));
 
-/*CURSO: Tecnologia em Análise e Desenvolvimento de Sistemas
-DISCIPLINA: Programação para Web
-Profa. Me. Janaine C. S. Arantes
-Prova 02*/
+
+app.listen(5000, () => {
+    console.log("Server started on Port 5000 link: http://localhost:5000");
+});
